@@ -1,4 +1,4 @@
-package de.hsh.dbs;
+package de.hsh.dbs2.ue3;
 
 public class User {
 
