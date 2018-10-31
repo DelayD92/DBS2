@@ -7,12 +7,13 @@ import java.sql.Statement;
 
 public class Main {
 
+        //jdbc driver setup
         private String driverURI = "oracle.jdbc.driver.OracleDriver";
 
         //enter username & password for dboracleserv:
         private User user = new User("", "");
 
-        public Main() throws SQLException {
+        public void main(String args[]) throws SQLException {
             String query = "";
             Statement stmt = null;
             ResultSet rs = null;
