@@ -2,21 +2,19 @@ package de.hsh.dbs;
 
 public class User {
 
-    //enter dboracleserv username & password
-    private String user = "";
-    private String pwd = "";
+    private String username ="";
+    private String password ="";
 
-
-    public User(String user, String pwd){
-        this.user = user;
-        this.pwd = pwd;
+    public User(String usr, String pwd) {
+        this.username = usr;
+        this.password = pwd;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getUsername(){
+        return username;
     }
 
-    public String getUser(){
-        return user;
+    public String getPassword() {
+        return password;
     }
 }

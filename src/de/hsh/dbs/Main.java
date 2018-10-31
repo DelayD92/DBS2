@@ -1,41 +1,31 @@
 package de.hsh.dbs;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import javax.xml.transform.Result;
+import java.sql.*;
 
 public class Main {
 
-        //jdbc driver setup
-        private String driverURI = "oracle.jdbc.driver.OracleDriver";
+    private User u = new User("", "");
+     static String driverURI = "oracle.jdbc.driver.OracleDriver";
 
-        //enter username & password for dboracleserv:
-        private User user = new User("", "");
 
-        public void main(String args[]) throws SQLException {
-            String query = "";
-            Statement stmt = null;
-            ResultSet rs = null;
-            Connection con = null;
+    public static void main(String args[]) throws SQLException {
 
-            try {
-                Class.forName(driverURI);
-                con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:db01", user.getUser(), user.getPwd());
-                stmt = con.createStatement();
-                rs = stmt.executeQuery(query);
+        try {
+            Class.forName(driverURI);
+            Connection con = DiverManager.getConnection("jdbc:oracle:thin@localhost:1521:db01", u.getUsername(), u.getPassword());
+            Statement stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
 
-                while(rs.next()) {
+            while( rs.next() ){
 
-                }
-            } catch (ClassNotFoundException | SQLException var9) {
-                var9.printStackTrace();
-            } finally {
-                rs.close();
-                stmt.close();
             }
+        } catch (ClassNotFoundException | SQLException var9) {
+            var9.printStackTrace();
+        } finally {
+            rs.close();
+            stmt.close();
         }
 
     }
-
-
+}
