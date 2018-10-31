@@ -22,17 +22,20 @@ END;
 /
 
 DECLARE
-  dummyCounter          number := 0;
-  movieIdCounter        number := 0;
+  movieIdCounter        NUMBER := 0;
+
   v_genre_id            NUMBER(10);
   v_genre               VARCHAR2(255);
+  v_genreLimit          NUMBER(1) := 2;
+  v_genreCount          NUMBER(1) := 0;
 
   v_movCharNewInsertId  NUMBER(10);
   v_personInsertId      NUMBER(10);
   v_personPlaysInsertId NUMBER(10);
 
-  type movie_types_arr is varray (4) of CHAR;
-  movie_types           movie_types_arr := movie_types_arr('V', 'T', 'C', 'G');
+  type movie_type_arr IS TABLE OF PLS_INTEGER INDEX BY VARCHAR(1);
+  movie_types           movie_type_arr;
+  movieTypeKey VARCHAR(1);
 
   v_movieNewInsertId    NUMBER(10);
   v_movie_original_id NUMBER(10);
@@ -40,7 +43,7 @@ DECLARE
   v_year              NUMBER(4);
   v_type              CHAR;
 
-  CURSOR movieCursor(movieType CHAR)
+  CURSOR movieCursor(movieType CHAR, movieCount NUMBER)
   IS
     SELECT DISTINCT M.ID v_movie_original_id, M.TITLE v_title, M.YEAR v_year, M.TYPE v_type
     FROM MOVIEDB.MOVIE M
@@ -49,12 +52,18 @@ DECLARE
       AND M.YEAR > 2000
       AND R.RATING > 7.0
     ORDER BY R.VOTES DESC, R.RATING DESC
-    FETCH FIRST 4 ROWS ONLY;
+    FETCH FIRST movieCount ROWS ONLY;
 BEGIN
 
-  FOR i in 1 .. movie_types.COUNT LOOP
+  movie_types('V') := 2;
+  movie_types('T') := 4;
+  movie_types('C') := 6;
+  movie_types('G') := 2;
 
-    FOR l_movieRecord IN movieCursor(movie_types(i)) LOOP
+  movieTypeKey := movie_types.FIRST;
+  WHILE movieTypeKey IS NOT NULL LOOP
+
+    FOR l_movieRecord IN movieCursor(TO_CHAR(movieTypeKey), movie_types(movieTypeKey)) LOOP
       movieIdCounter := movieIdCounter + 1;
 
       -- insert movie
@@ -63,7 +72,9 @@ BEGIN
           RETURNING MovieID into v_movieNewInsertId;
 
       -- insert genre and movie genre
+      v_genreCount := 1;
       FOR genre_loop IN (SELECT * FROM MOVIEDB.GENRE G WHERE G.Movie = l_movieRecord.v_movie_original_id) LOOP
+        EXIT WHEN v_genreCount > v_genreLimit;
         BEGIN
           SELECT GenreID INTO v_genre_id FROM Genre WHERE Genre = genre_loop.Genre;
           EXCEPTION
@@ -72,6 +83,7 @@ BEGIN
             INSERT INTO GENRE (Genre) VALUES (genre_loop.Genre) RETURNING GenreID INTO v_genre_id;
         END;
         INSERT INTO MovieGenre (Movie, Genre) VALUES (v_movieNewInsertId, v_genre_id);
+        v_genreCount := v_genreCount + 1;
       END LOOP genre_loop;
 
       -- insert person, movie character and movie cast
@@ -111,7 +123,10 @@ BEGIN
       END LOOP movie_char_loop;
 
     END LOOP;
-  END LOOP;
+
+    movieTypeKey := movie_types.next(movieTypeKey);
+
+  END LOOP whileloop;
 
 END;
 
