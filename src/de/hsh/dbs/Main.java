@@ -5,13 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DBConnect {
+public class Main {
 
-        static String driverURI = "oracle.jdbc.driver.OracleDriver";
-        static String user = "a0y-g2u-u1";
-        static String pwd = "testit2_";
+        private String driverURI = "oracle.jdbc.driver.OracleDriver";
 
-        public DBConnect() throws SQLException {
+        //enter username & password for dboracleserv:
+        private User user = new User("", "");
+
+        public Main() throws SQLException {
             String query = "";
             Statement stmt = null;
             ResultSet rs = null;
@@ -19,12 +20,12 @@ public class DBConnect {
 
             try {
                 Class.forName(driverURI);
-                con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:db01", user, pwd);
+                con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:db01", user.getUser(), user.getPwd());
                 stmt = con.createStatement();
                 rs = stmt.executeQuery(query);
 
                 while(rs.next()) {
-                    ;
+
                 }
             } catch (ClassNotFoundException | SQLException var9) {
                 var9.printStackTrace();
@@ -36,4 +37,4 @@ public class DBConnect {
 
     }
 
-}
+
