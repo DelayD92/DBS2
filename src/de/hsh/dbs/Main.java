@@ -10,13 +10,11 @@ public class Main {
         String query = "SELECT * FROM Movie";
         Statement stmt = null;
         ResultSet rs = null;
-        //Connection con;
 
         try {
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:db01", u.getUsername(), u.getPassword());
             stmt = con.createStatement();
             rs = stmt.executeQuery(query);
-            System.out.println("Executing query....");
 
                 while(rs.next()){
                     String title= rs.getString("title");
