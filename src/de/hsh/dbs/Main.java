@@ -3,6 +3,7 @@ package de.hsh.dbs;
 import java.sql.*;
 
 public class Main {
+
     static User u = new User("", "");
 
 
@@ -10,9 +11,10 @@ public class Main {
         String query = "SELECT * FROM Movie";
         Statement stmt = null;
         ResultSet rs = null;
+        Connection con;
 
         try {
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:db01", u.getUsername(), u.getPassword());
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:db01", u.getUsername(), u.getPassword());
             stmt = con.createStatement();
             rs = stmt.executeQuery(query);
 
