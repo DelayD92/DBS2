@@ -10,7 +10,7 @@ DECLARE
                 EXECUTE IMMEDIATE 'ALTER TABLE ' || tableName || ' MODIFY(' || idColName ||
                                   ' Generated AS IDENTITY (START WITH 1))';
             END IF;
-            -- EXCEPTION WHEN OTHERS THEN NULL; -> Don't use this. Since the tables must exist before running this script.
+      --EXCEPTION WHEN OTHERS THEN NULL; -- Don't use this. Since the tables must exist before running this script.
         END;
 BEGIN
     cleanTable('MovieGenre');

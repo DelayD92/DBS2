@@ -8,3 +8,7 @@ cmake-build-*/
 
 # IntelliJ
 out/
+
+
+# Config file
+settings.json
