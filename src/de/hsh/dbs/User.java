@@ -2,8 +2,8 @@ package de.hsh.dbs;
 
 public class User {
 
-    private String username ="";
-    private String password ="";
+    private String username ="tnn-867-u1";
+    private String password ="testit2_";
 
     public User(String usr, String pwd) {
         this.username = usr;
