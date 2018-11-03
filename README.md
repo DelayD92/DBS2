@@ -17,7 +17,7 @@
 
 Repeat those steps every time if you want to rerun the program after some changes happen:
 
-1. Delete the output directory 
+1. Delete and recreate the output directory 
 ```bash
 rm -fr ./out; mkdir ./out;
 ```
@@ -29,14 +29,24 @@ javac -d ./out -cp .:./lib/ojdbc8.jar:./lib/gson-2.8.5.jar:./src/main/java/ src/
 
 3. Run compiled code
 
-  e.g. with the MovieID **2**:
+- To get all movies from DB:
+```bash
+java -cp ./out:./lib/ojdbc8.jar:./lib/gson-2.8.5.jar:src/ de.hsh.dbs2.ue3.ReadMovieDB
+```
+
+- To get a specific movie with an ID (e.g. **2**):
 ```bash
 java -cp ./out:./lib/ojdbc8.jar:./lib/gson-2.8.5.jar:src/ de.hsh.dbs2.ue3.ReadMovieDB 2
 ``` 
 
+- To get multiple movies with specific IDs (e.g. 2 abc 42 0 -4 12)
+```bash
+java -cp ./out:./lib/ojdbc8.jar:./lib/gson-2.8.5.jar:src/ de.hsh.dbs2.ue3.ReadMovieDB 2 abc 42 0 12
+``` 
+
 #### In IDE
 
-Intellij IDEA 
+IntelliJ IDEA 
 
 1. Click on "Edit Configurations..." on the right top corner
 2. Go to "Program arguments:" field in the popup window
