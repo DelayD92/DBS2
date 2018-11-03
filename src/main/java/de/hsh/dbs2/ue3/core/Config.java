@@ -4,8 +4,8 @@ import de.hsh.dbs2.ue3.utils.Log;
 
 public class Config {
 
-    public DB db;
     public Log.LogLevel logLevel;
+    public DB db;
 
     public class DB {
         public String driver;
