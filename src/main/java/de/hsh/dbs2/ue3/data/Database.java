@@ -33,7 +33,7 @@ public class Database {
     }
 
     public static Database getInstance() {
-        if(dbInstance == null) {
+        if (dbInstance == null) {
             Log.error("Database not initialized. Please call init(dbConfig) first!");
         }
 

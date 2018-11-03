@@ -59,7 +59,7 @@ public class ReadMovieDB {
     private static void run(String... args) {
         List<Integer> movieIdList;
 
-        if(args == null || args.length == 0) {
+        if (args == null || args.length == 0) {
             movieIdList = getAllMovieIds();
         } else {
             movieIdList = Arrays.stream(args).filter(val -> {
@@ -71,18 +71,18 @@ public class ReadMovieDB {
                     return false;
                 }
             })
-            .map(Integer::valueOf)
-            .distinct()
-            .collect(Collectors.toList());
+                .map(Integer::valueOf)
+                .distinct()
+                .collect(Collectors.toList());
         }
 
-        if(movieIdList == null || movieIdList.size() == 0) {
+        if (movieIdList == null || movieIdList.size() == 0) {
             Log.warn("No movie id given");
             return;
         }
 
         int counter = 0;
-        for(int id : movieIdList) {
+        for (int id : movieIdList) {
             System.out.printf("%d.\n", ++counter);
             printMovieInfo(id);
             System.out.println();
@@ -95,7 +95,7 @@ public class ReadMovieDB {
         Log.debug("Looking for the movie with the ID: ", movieId);
         String movie = findMovieById(movieId);
 
-        if(movie == null) {
+        if (movie == null) {
             System.out.printf("No movie found with the given ID %s \n", movieId);
             return;
         }
@@ -191,7 +191,7 @@ public class ReadMovieDB {
             stmt.setInt(1, movieId);
             ResultSet rs = stmt.executeQuery();
 
-            if(!rs.next()) {
+            if (!rs.next()) {
                 return null;
             }
 
@@ -204,7 +204,7 @@ public class ReadMovieDB {
                         rs.getString("Name")
                     )
                 );
-            } while(rs.next());
+            } while (rs.next());
 
             return cast;
         } catch (SQLException e) {

@@ -8,6 +8,48 @@ public class Log {
 
     private static LogLevel currLogLevel = LogLevel.INFO;
 
+    public static void setLogLevel(LogLevel logLevel) {
+        currLogLevel = logLevel;
+    }
+
+    public static void debug(Object... args) {
+        if (currLogLevel.isLowerOrEqual(LogLevel.DEBUG)) defaultLog(LogLevel.DEBUG, args);
+    }
+
+    public static void info(Object... args) {
+        if (currLogLevel.isLowerOrEqual(LogLevel.INFO)) defaultLog(LogLevel.INFO, args);
+    }
+
+    public static void warn(Object... args) {
+        if (currLogLevel.isLowerOrEqual(LogLevel.WARN)) defaultLog(LogLevel.WARN, args);
+    }
+
+    public static void error(Object... args) {
+        if (currLogLevel.isLowerOrEqual(LogLevel.ERROR)) defaultLog(LogLevel.ERROR, args);
+    }
+
+    public static void error(Exception e) {
+        if (currLogLevel.isLowerOrEqual(LogLevel.ERROR)) defaultLog(LogLevel.ERROR, e.getMessage());
+    }
+
+    public static void defaultLog(LogLevel logLevel, Object... args) {
+        System.out.printf(getCallerInfo() + " %s: ", logLevel);
+        Arrays.stream(args).forEach(o -> System.out.print(o.toString() + " "));
+        System.out.println();
+    }
+
+    private static CallerInfo getCallerInfo() {
+        StackTraceElement[] stElements = Thread.currentThread().getStackTrace();
+        for (int i = 1; i < stElements.length; i++) {
+            StackTraceElement ste = stElements[i];
+            if (!ste.getClassName().equals(Log.class.getName()) && ste.getClassName().indexOf("java.lang.Thread") != 0) {
+                return new CallerInfo(ste.getClassName(), ste.getLineNumber());
+            }
+        }
+        return null;
+    }
+
+
     public enum LogLevel {
         @SerializedName("0")
         VERBOSE(0, "V"),
@@ -40,37 +82,6 @@ public class Log {
         }
     }
 
-    public static void setLogLevel(LogLevel logLevel) {
-        currLogLevel = logLevel;
-    }
-
-    public static void debug(Object ...args) {
-        if(currLogLevel.isLowerOrEqual(LogLevel.DEBUG)) defaultLog(LogLevel.DEBUG, args);
-    }
-
-    public static void info(Object ...args) {
-        if(currLogLevel.isLowerOrEqual(LogLevel.INFO)) defaultLog(LogLevel.INFO, args);
-    }
-
-    public static void warn(Object ...args) {
-        if(currLogLevel.isLowerOrEqual(LogLevel.WARN)) defaultLog(LogLevel.WARN, args);
-    }
-
-    public static void error(Object ...args) {
-        if(currLogLevel.isLowerOrEqual(LogLevel.ERROR)) defaultLog(LogLevel.ERROR, args);
-    }
-
-    public static void error(Exception e) {
-        if(currLogLevel.isLowerOrEqual(LogLevel.ERROR)) defaultLog(LogLevel.ERROR, e.getMessage());
-    }
-
-    public static void defaultLog(LogLevel logLevel, Object ...args) {
-        System.out.printf(getCallerInfo() + " %s: ", logLevel);
-        Arrays.stream(args).forEach(o -> System.out.print(o.toString() + " "));
-        System.out.println();
-    }
-
-
     private static class CallerInfo {
         final String className;
         final int line;
@@ -84,17 +95,6 @@ public class Log {
         public String toString() {
             return String.format("[%s (%d)]", className, line);
         }
-    }
-
-    private static CallerInfo getCallerInfo() {
-        StackTraceElement[] stElements = Thread.currentThread().getStackTrace();
-        for (int i = 1; i < stElements.length; i++) {
-            StackTraceElement ste = stElements[i];
-            if (!ste.getClassName().equals(Log.class.getName()) && ste.getClassName().indexOf("java.lang.Thread")!=0) {
-                return new CallerInfo(ste.getClassName(), ste.getLineNumber());
-            }
-        }
-        return null;
     }
 
 }
