@@ -96,7 +96,7 @@ public class ReadMovieDB {
         String movie = findMovieById(movieId);
 
         if(movie == null) {
-            System.out.printf("No movie found with the given id %s \n", movieId);
+            System.out.printf("No movie found with the given ID %s \n", movieId);
             return;
         }
 
@@ -191,19 +191,22 @@ public class ReadMovieDB {
             stmt.setInt(1, movieId);
             ResultSet rs = stmt.executeQuery();
 
+            if(!rs.next()) {
+                return null;
+            }
+
             List<String> cast = new ArrayList<>();
 
-            while (rs.next()) {
+            do {
                 cast.add(
                     String.format("%s: %s",
                         rs.getString("Character"),
                         rs.getString("Name")
                     )
                 );
-            }
+            } while(rs.next());
 
             return cast;
-
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
