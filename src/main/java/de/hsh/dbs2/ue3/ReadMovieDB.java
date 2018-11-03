@@ -70,10 +70,7 @@ public class ReadMovieDB {
                     Log.warn(String.format("'%s' is not an integer! Skipping...", val));
                     return false;
                 }
-            })
-                .map(Integer::valueOf)
-                .distinct()
-                .collect(Collectors.toList());
+            }).map(Integer::valueOf).distinct().collect(Collectors.toList());
         }
 
         if (movieIdList == null || movieIdList.size() == 0) {
@@ -113,14 +110,18 @@ public class ReadMovieDB {
             .append("SELECT MovieID FROM Movie")
             .toString();
 
-        List<Integer> movieIdList = new ArrayList<>();
-
         try (Statement stmt = Database.getInstance().createStatement()) {
             ResultSet rs = stmt.executeQuery(movieQuery);
 
-            while (rs.next()) {
-                movieIdList.add(rs.getInt("MovieID"));
+            if (!rs.next()) {
+                return null;
             }
+
+            List<Integer> movieIdList = new ArrayList<>();
+
+            do {
+                movieIdList.add(rs.getInt("MovieID"));
+            } while (rs.next());
 
             return movieIdList;
 
