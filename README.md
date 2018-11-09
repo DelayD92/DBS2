@@ -1,4 +1,4 @@
-# Iteration 2
+# Uebung 3 - Iteration 2
 
 ## How to run
 
@@ -55,7 +55,7 @@ IntelliJ IDEA
 
 
 
-# ATTENTION
+## ATTENTION
 
 Do not commit and push the 'src/main/resources/options/settings.json' file, as it should contain your database credentials.
 This file already added to .gitignore. So, please don't change it and don't commit it on your behalf. 
