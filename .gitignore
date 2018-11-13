@@ -9,6 +9,9 @@ cmake-build-*/
 # IntelliJ
 out/
 
-
 # Config file
 settings.json
+
+# Scripts
+scripts
+!scripts/windows/iter2_compile_and_run.EXAMPLE.bat

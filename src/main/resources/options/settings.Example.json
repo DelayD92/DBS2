@@ -1,7 +1,8 @@
 {
-    "logLevel": 0,
+    "logLevel": "debug",
     "db": {
         "connectionString": "jdbc:oracle:thin:@127.0.0.1:8080:db01",
+        "driver": "oracle.jdbc.OracleDriver",
         "user": {
             "name": "db username",
             "password": "db password"
