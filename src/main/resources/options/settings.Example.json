@@ -1,0 +1,11 @@
+{
+    "logLevel": "info",
+    "db": {
+        "driver": "oracle.jdbc.driver.OracleDriver",
+        "connectionString": "jdbc:oracle:thin:@127.0.0.1:8080:db01",
+        "user": {
+            "name": "db username",
+            "password": "db password"
+        }
+    }
+}

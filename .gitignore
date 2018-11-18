@@ -1,0 +1,13 @@
+*.iml
+.idea/
+
+.DS_Store
+
+# CMake
+cmake-build-*/
+
+# IntelliJ
+out/
+
+# Config file
+settings.json
