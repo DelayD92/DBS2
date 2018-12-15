@@ -7,9 +7,10 @@
 ### Setup your environment
 1. In `src/main/resources/META-INF/` locate the file `persistence.example.xml` and rename as `persistence.xml`. 
 
-  - Place the `hibernate.connection.url` and your db credentials properly.
+  - Place the `hibernate.connection.url` and your `db credentials` and  db schema (`hibernate.connection.schema`, which is basically your db username, but you have to put the schema name in single quotes!) 
+  properly.
   - Read the comments above the `hibernate.hbm2ddl.auto` property carefully and remove the surrounding
-  comments ("<!-- -->") properly to activate the property!
+  comments ('\<!-- -->') properly to activate the property!
 
 2. Create SSH TUNNEL to the DB server
 
