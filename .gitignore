@@ -1,0 +1,14 @@
+*.iml
+.idea/
+
+.DS_Store
+
+# CMake
+cmake-build-*/
+
+# IntelliJ
+out/
+
+# Hibernate
+persistence.xml
+
