@@ -3,7 +3,7 @@
 ## Authors
 - Kenan Güler
 - Daniel Diele
-- Julian Sender
+
 - Yannick Hollmann
 
 ## How to run
